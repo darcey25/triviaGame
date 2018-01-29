@@ -1,18 +1,17 @@
 
 
 var questions = [
-  ["What is Earth's largest continent?", "Asia","Africa","Europe","Antartica", 1, "Asia", ""],
-  ["What country has the most natural lakes?", "India","United States","Canada","Australia", 3, "Canada"],
-  ["In what country can you visit Machu Picchu?", "Peru","Chile","Bolivia","Colombia", 1, "Peru"],
-  ["Which African nation has the most pyramids?", "Libya","Egypt","Algeria","Sudan", 4, "Sudan"],
-  ["What African country served as the setting for Tatooine in Star Wars?", "Gabon","Ghana","Tunisia","Ethiopia", 3, "Tunisia"],
-  ["What is the largest country in South America?", "Argentina","Brazil","Peru","Colombia", 2, "Brazil"],
-  ["What is the highest waterfall in Europe?", "Krimml","Triberg","Kjelfossen","Rhine", 1,"Krimml"],
-  ["Montevideo is the capital of what South American country?", "Suriname","Peru","Paraguay","Uruguay", 4, "Uruguay"],
-  ["What is the oldest city in Texas?", "El Paso","Nacogdoches","San Antonio","De Kalb", 2, "Nacogdoches"],
-  ["What is the best country in the world", "South Korea","Ecuador","Spain","United States", 2, "Ecuador"]
+  ["What is Earth's largest continent?", "Asia","Africa","Europe","Antartica", 1, "Asia", "assets/images/asia.png"],
+  ["What country has the most natural lakes?", "India","United States","Canada","Australia", 3, "Canada", "assets/images/canada.png"],
+  ["In what country can you visit Machu Picchu?", "Peru","Chile","Bolivia","Colombia", 1, "Peru", "assets/images/peru.png"],
+  ["Which African nation has the most pyramids?", "Libya","Egypt","Algeria","Sudan", 4, "Sudan", "assets/images/sudan.png"],
+  ["What African country served as the setting for Tatooine in Star Wars?", "Gabon","Ghana","Tunisia","Ethiopia", 3, "Tunisia", "assets/images/tunisia.png"],
+  ["What is the largest country in South America?", "Argentina","Brazil","Peru","Colombia", 2, "Brazil", "assets/images/brazil.png"],
+  ["What is the highest waterfall in Europe?", "Krimml","Triberg","Kjelfossen","Rhine", 1,"Krimml", "assets/images/waterfall.jpg"],
+  ["Montevideo is the capital of what South American country?", "Suriname","Peru","Paraguay","Uruguay", 4, "Uruguay", "assets/images/uruguay.png"],
+  ["What is the oldest city in Texas?", "El Paso","Nacogdoches","San Antonio","De Kalb", 2, "Nacogdoches", "assets/images/nacogdoches.jpg"],
+  ["What is the best country in the world", "South Korea","Ecuador","Spain","United States", 2, "Ecuador", "assets/images/ecuador.png"]
 ]
-console.log("array length " + questions.length);
 
 var answersCorrect = 0;
 var answersWrong = 0;
@@ -27,6 +26,7 @@ var questionCounter = 0;
 $("#start").on("click", function() {
   $("#start").hide();
   $(".answer").removeAttr("hidden");
+  $("#image").removeAttr("hidden");
   askQuestion();
   
 
@@ -39,6 +39,7 @@ $("#playAgain").on("click", function() {
   clearInterval(secondIntervalId);
   shuffle(questions);
   $("#playAgain").hide();
+  $("#results").empty();
   $("#results").hide();
   answersCorrect = 0;
   answersWrong = 0;
@@ -53,10 +54,10 @@ $("#playAgain").on("click", function() {
 // ask question
 
 function askQuestion() { 
+  $("#image").hide();
   clearInterval(secondIntervalId);
   $(".answer").show();
   var currentQuestion = questions[questionCounter][0];
-  console.log(currentQuestion);
   var firstAns = questions[questionCounter][1];
   var secondAns = questions[questionCounter][2];
   var thirdAns = questions[questionCounter][3];
@@ -80,24 +81,27 @@ $(".answer").on("click", function(){
   var correctAns = questions[questionCounter][5];
   var correctAnsText = questions[questionCounter][6];
   var userPick = $(this).val();
-  console.log(userPick);
+  //console.log(userPick);
   if (parseInt(userPick) === correctAns) {
     $("#question").text("Correct!");
     $(".answer").hide();
+    $("#image").attr("src", questions[questionCounter][7]);
+    $("#image").show();
     answersCorrect++;
-    console.log("correct " + answersCorrect);
+    //console.log("correct " + answersCorrect);
     countDown = 10;
     questionCounter++;
-    console.log("question " + questionCounter);
+    //console.log("question " + questionCounter);
     nextQuestion();
 
   }
   else {
     $("#question").text("Wrong! The correct answer is " + correctAnsText + "!");
     $(".answer").hide();
+    $("#image").attr("src", questions[questionCounter][7]);
+    $("#image").show();
     answersWrong++;
-    console.log("wrong " +  answersWrong);
-
+    //console.log("wrong " +  answersWrong);
     countDown = 10;
     questionCounter++;
     nextQuestion();
@@ -116,9 +120,11 @@ function clock() {
     clearInterval(intervalId);
     var correctAnsText = questions[questionCounter][6];
     $("#question").text("Times up! The correct answer is " + correctAnsText + "!");
+    $("#image").attr("src", questions[questionCounter][7]);
+    $("#image").show();
     countDown = 10;
     unanswered++;
-    console.log("unanswered " + unanswered);
+    //console.log("unanswered " + unanswered);
     questionCounter++;
     nextQuestion();
   }
@@ -137,26 +143,34 @@ function nextQuestion() {
     secondIntervalId = setInterval(askQuestion, 3000);
   }
   else {
-    var playAgain = $("#playAgain");
-    var questionDiv = $("#question");
-    if (answersCorrect < 5) {
-      questionDiv.text("Your geography knowledge needs improvement!")
-    }
-    else if (answersCorrect < 8) {
-      questionDiv.text("with some studying you could be a geography guru!")
-    }
-    else if(answersCorrect < 10){
-      questionDiv.text("You have achieved expert level!")
-    }
-    else {
-      questionDiv.text("You are a guru")
-    }
-    $("#results").append("<br>" + "Correct answers: " + answersCorrect + "<br>");
-    $("#results").append("Incorrect answers: " + answersWrong + "<br>");
-    $("#results").append("Unanswered: " + unanswered);
-    playAgain.removeAttr("hidden");
-    playAgain.show();
+    secondIntervalId = setInterval(showResult, 3000);
   }
+
+}
+
+function showResult() {
+  clearInterval(secondIntervalId);
+  $("#image").hide();
+  var playAgain = $("#playAgain");
+  var questionDiv = $("#question");
+  if (answersCorrect < 5) {
+    questionDiv.text("Your geography knowledge needs improvement!")
+  }
+  else if (answersCorrect < 8) {
+    questionDiv.text("with some studying you could be a geography guru!")
+  }
+  else if(answersCorrect < 10){
+    questionDiv.text("You have achieved expert level!")
+  }
+  else {
+    questionDiv.text("You are a guru!")
+  }
+  $("#results").append("<br>" + "Correct answers: " + answersCorrect + "<br>");
+  $("#results").append("Incorrect answers: " + answersWrong + "<br>");
+  $("#results").append("Unanswered: " + unanswered);
+  $("#results").show();
+  playAgain.removeAttr("hidden");
+  playAgain.show();
 }
 
 // shuffles the questions array, so the questions
@@ -173,24 +187,7 @@ function shuffle (questions) {
     questions[i] = questions[j]
     questions[j] = temp
   }
-  console.log(questions);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
