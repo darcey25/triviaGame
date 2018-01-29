@@ -1,0 +1,92 @@
+* {
+  box-sizing: border-box;
+}
+
+.container {
+  color: navy;
+  max-width: 600px;
+  height: 500px;
+  background-image: url("../images/background.jpg");
+  background-size: 100% 100%; 
+  text-align: center;
+  margin-top: 50px;
+}
+#clock, #question {
+  position: relative;
+  opacity: .7;
+  height: 50px;
+  width: 500px;
+  background-color: rgba(216, 140, 140, 0.90);
+  margin: auto;
+  text-align: center;
+}
+#answers {
+  position: relative;
+  background-color: rgba(216, 140, 140, 0.80);
+  width: 500px;
+  height: 200px;
+  margin: auto;
+  top: 80px;
+  border-radius: 50px;
+}
+#answer1, #answer3 {
+  float: left;
+  width: 200px;
+  margin: 0 0 20px 30px;
+}
+
+#answer2, #answer4 {
+  float: right;
+  width: 200px;
+  margin: 0 30px 20px 0;
+}
+#answer1, #answer2 {
+  margin-top: 50px;
+}
+strong {
+  color: navy;
+}
+
+h1 {
+  margin-top: 50px;
+}
+
+#start {
+  width: 300px;
+  margin-top: 80px;
+}
+
+#image {
+  width: 300px;
+
+}
+
+#title {
+  position: relative;
+  top: 20px;
+}
+
+#clock {
+  top: 40px;
+  padding-top: 10px;
+}
+
+#question {
+  top: 50px;
+  padding-top: 10px;
+}
+
+button {
+  opacity: .9;
+}
+
+#playAgain {
+  width: 300px;
+  margin-top: 20px;
+}
+
+
+
+
+
+
