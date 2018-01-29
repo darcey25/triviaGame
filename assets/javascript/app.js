@@ -23,14 +23,16 @@ var questionCounter = 0;
 
 
 // start game when user clicks game start
-$("#start").on("click", function() {
-  $("#start").hide();
-  $(".answer").removeAttr("hidden");
-  $("#image").removeAttr("hidden");
-  askQuestion();
+$(document).ready(function() {
+  $("#start").on("click", function() {
+    $("#start").hide();
+    $(".answer").removeAttr("hidden");
+    $("#image").removeAttr("hidden");
+    askQuestion();
   
 
-})
+  });
+});
 
 
 // reset game to start over
